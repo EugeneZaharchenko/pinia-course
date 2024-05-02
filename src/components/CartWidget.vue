@@ -24,15 +24,15 @@ const active = ref(false);
             :key="name"
             :product="items[0]"
             :count="items.length"
-            @updateCount=""
-            @clear=""
+            @updateCount="cartStore.setItemCount(items[0], $event)"
+            @clear="cartStore.clearItem(name)"
           />
         </ul>
         <div class="flex justify-end text-2xl mb-5">
-          Total: <strong>$40</strong>
+          Total: <strong>${{cartStore.total}}</strong>
         </div>
         <div class="flex justify-end">
-          <AppButton class="secondary mr-2">Clear Cart</AppButton>
+          <AppButton class="secondary mr-2" @click='cartStore.$reset()'>Clear Cart</AppButton>
           <AppButton class="primary">Checkout</AppButton>
         </div>
       </div>
@@ -41,6 +41,7 @@ const active = ref(false);
     </AppModalOverlay>
   </div>
 </template>
+
 <style lang="pcss" scoped>
 .items-in-cart{
   @apply mb-5;
