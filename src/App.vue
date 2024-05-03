@@ -3,8 +3,25 @@ import TheHeader from "@/components/TheHeader.vue";
 import ProductCard from "@/components/ProductCard.vue";
 import { useProductStore } from "@/stores/ProductStore";
 import { useCartStore } from '@/stores/CartStore'
+// import { after } from "lodash";
+// import { onErrorCaptured } from "vue";
 const productStore = useProductStore();
 const cartStore = useCartStore();
+cartStore.$onAction((
+  {
+    name, store, args, after, onError
+  }
+)=> {
+  if(name === 'addItems') {
+    after(()=>{
+      console.log(args[0])
+    });
+    onError((err) => {
+      console.log(`Awful error: ${err}`)
+    })
+  }
+}
+)
 productStore.fill();
 </script>
 
